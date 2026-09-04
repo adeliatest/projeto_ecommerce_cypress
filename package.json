@@ -1,0 +1,23 @@
+{
+  "name": "projeto_ecommerce_auto",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/adeliatest/projeto_ecommerce_cypress#readme",
+  "bugs": {
+    "url": "https://github.com/adeliatest/projeto_ecommerce_cypress/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adeliatest/projeto_ecommerce_cypress.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "cypress": "^16.0.0"
+  }
+}
