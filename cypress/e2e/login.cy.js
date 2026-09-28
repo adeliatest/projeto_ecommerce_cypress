@@ -21,6 +21,8 @@ describe('Tela de login - SauceDemo', () => {
     // botão de logout
     cy.get('[data-test="logout-sidebar-link"]').click();
     // validação após logout
+    cy.url().should('eq', 'https://www.saucedemo.com/');
+    cy.get('[data-test="login-button"]').should('be.visible');
   });
 
   it('Login - usuário incorreto', () => {
