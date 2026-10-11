@@ -1,5 +1,14 @@
 {
-  "name": "Using fixtures to represent data",
-  "email": "hello@cypress.io",
-  "body": "Fixtures are a great way to mock data for responses to routes"
+  "valido": {
+    "usuario": "standard_user",
+    "senha": "secret_sauce",
+    "tituloAposLogin": "Products"
+  },
+  "invalido": {
+    "usuario": "usuario_incorreto",
+    "senha": "senha_incorreta",
+    "erroCredenciais": "Epic sadface: Username and password do not match any user in this service",
+    "erroUsuarioVazio": "Epic sadface: Username is required",
+    "erroSenhaVazia": "Epic sadface: Password is required"
+  }
 }

@@ -1,25 +1,15 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+/// <reference types="cypress" />
+import loginPage from "./pages/loginPage"
+
+// login na interface
+Cypress.Commands.add('login', (usuario = 'standard_user', senha = 'secret_sauce') => {
+    loginPage.acessarPagina();
+    loginPage.realizarLogin(usuario, senha)
+})
+
+// login pulando a interface - bypass de UI - cookies
+// é mais útil quando se tem muitos testes, para que o fluxo de login
+// não se repita tantas vezes e consuma mais tempo
+Cypress.Commands.add('loginViaCookie', (usuario = 'standard_user') => {
+    cy.setCookie('session-username', usuario);
+});

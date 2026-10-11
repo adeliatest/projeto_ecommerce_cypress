@@ -1,56 +1,60 @@
 /// <reference types="cypress" />
-import loginPage from '../support/pages/loginPage'
+import loginPage from '../support/pages/LoginPage';
 
 describe('Tela de login - SauceDemo', () => {
+  
   beforeEach(() => {
-    // tela de login
+    // acessa página de login
     loginPage.acessarPagina();
+    // carrega a fixture e dá um apelido
+    cy.fixture('example.json').as('dados');
   });
 
-  it('Login - credenciais válidas e logout', () => {
-    // realiza login  
-    loginPage.realizarLogin('standard_user', 'secret_sauce');
+  it('Login - credenciais válidas e logout', function() {
+    // login com dados válidos
+    loginPage.realizarLogin(this.dados.valido.usuario, this.dados.valido.senha);
+    
+    // valida título da página após login
+    loginPage.seletores.tituloPagina().should('have.text', this.dados.valido.tituloAposLogin);
 
-    // valida texto da página após o login
-    loginPage.seletores.tituloPagina().should('have.text', 'Products');
-    // logout após validação
+    // realiza logout
     loginPage.realizarLogout();
-    // valida url e botão após logout
+    
+    // validações pós-logout
     cy.url().should('eq', 'https://www.saucedemo.com/');
     loginPage.seletores.botaoLogin().should('be.visible');
   });
 
-  it('Login - usuário incorreto', () => {
-    // realiza login
-    loginPage.realizarLogin('usuario_incorreto', 'secret_sauce')
-
-    // validação da mensagem de erro - usuário ou senha incorreta
-    loginPage.seletores.mensagemErro().should('have.text', 'Epic sadface: Username and password do not match any user in this service');
-  });
-
-  it('Login - senha incorreta', () => {
-    // realiza login
-    loginPage.realizarLogin('standard_user', 'senha_incorreta')
-
-    // validação da mensagem de erro - usuário ou senha incorreta
-    loginPage.seletores.mensagemErro().should('have.text', 'Epic sadface: Username and password do not match any user in this service');
-  });
-
-  it('Login - usuário em branco', () => {
-    // realiza login
-    loginPage.realizarLogin(null, 'secret_sauce');
+  it('Login - usuário incorreto', function() {
+    // login com usuário inválido e a senha válida
+    loginPage.realizarLogin(this.dados.invalido.usuario, this.dados.valido.senha);
     
-    // validação da mensagem de erro - campo obrigatório
-    loginPage.seletores.mensagemErro().should('have.text', 'Epic sadface: Username is required');
+    // valida a mensagem de erro
+    loginPage.seletores.mensagemErro().should('have.text', this.dados.invalido.erroCredenciais);
   });
 
-  it('Login - senha em branco', () => {
-    // realiza login
-    loginPage.realizarLogin('secret_sauce', null);
+  it('Login - senha incorreta', function() {
+    // login usuário válido e a senha inválida
+    loginPage.realizarLogin(this.dados.valido.usuario, this.dados.invalido.senha);
     
-    // validação da mensagem de erro - campo obrigatório
-    loginPage.seletores.mensagemErro().should('have.text', 'Epic sadface: Password is required');
+    // valida a mensagem de erro
+    loginPage.seletores.mensagemErro().should('have.text', this.dados.invalido.erroCredenciais);
+  });
+
+  it('Login - usuário em branco', function() {
+    // login com campo usuário em branco
+    loginPage.realizarLogin(null, this.dados.valido.senha);
+    
+    // valida a mensagem de erro para campo obrigatório
+    loginPage.seletores.mensagemErro().should('have.text', this.dados.invalido.erroUsuarioVazio);
+  });
+
+  it('Login - senha em branco', function() {
+    // login com campo senha em branco
+    loginPage.realizarLogin(this.dados.valido.usuario, null);
+    
+    // valida a mensagem de erro para campo obrigatório
+    loginPage.seletores.mensagemErro().should('have.text', this.dados.invalido.erroSenhaVazia);
   });
   
 });
-
