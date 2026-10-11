@@ -1,68 +1,55 @@
 /// <reference types="cypress" />
+import loginPage from '../support/pages/loginPage'
 
 describe('Tela de login - SauceDemo', () => {
   beforeEach(() => {
     // tela de login
-    cy.visit('https://saucedemo.com')
+    loginPage.acessarPagina();
   });
 
   it('Login - credenciais válidas e logout', () => {
-    // usuário
-    cy.get('[data-test="username"]').type('standard_user');
-    // senha
-    cy.get('[data-test="password"]').type('secret_sauce');
-    // botão de login
-    cy.get('[data-test="login-button"]').click();
-    // validação de texto após login com sucesso
-    cy.get('[data-test="title"]').should('have.text', 'Products');
+    // realiza login  
+    loginPage.realizarLogin('standard_user', 'secret_sauce');
 
-    // abre side-bar
-    cy.get('#react-burger-menu-btn').click();
-    // botão de logout
-    cy.get('[data-test="logout-sidebar-link"]').click();
-    // validação após logout
+    // valida texto da página após o login
+    loginPage.seletores.tituloPagina().should('have.text', 'Products');
+    // logout após validação
+    loginPage.realizarLogout();
+    // valida url e botão após logout
     cy.url().should('eq', 'https://www.saucedemo.com/');
-    cy.get('[data-test="login-button"]').should('be.visible');
+    loginPage.seletores.botaoLogin().should('be.visible');
   });
 
   it('Login - usuário incorreto', () => {
-    // usuário incorreto
-    cy.get('[data-test="username"]').type('usuario_incorreto');
-    // senha
-    cy.get('[data-test="password"]').type('secret_sauce');
-    // botão de login
-    cy.get('[data-test="login-button"]').click();
+    // realiza login
+    loginPage.realizarLogin('usuario_incorreto', 'secret_sauce')
+
     // validação da mensagem de erro - usuário ou senha incorreta
-    cy.get('[data-test="error"]').should('have.text', 'Epic sadface: Username and password do not match any user in this service');
+    loginPage.seletores.mensagemErro().should('have.text', 'Epic sadface: Username and password do not match any user in this service');
   });
 
   it('Login - senha incorreta', () => {
-    // usuário incorreto
-    cy.get('[data-test="username"]').type('standard_user');
-    // senha
-    cy.get('[data-test="password"]').type('senha_incorreta');
-    // botão de login
-    cy.get('[data-test="login-button"]').click();
+    // realiza login
+    loginPage.realizarLogin('standard_user', 'senha_incorreta')
+
     // validação da mensagem de erro - usuário ou senha incorreta
-    cy.get('[data-test="error"]').should('have.text', 'Epic sadface: Username and password do not match any user in this service');
+    loginPage.seletores.mensagemErro().should('have.text', 'Epic sadface: Username and password do not match any user in this service');
   });
 
   it('Login - usuário em branco', () => {
-    // senha
-    cy.get('[data-test="password"]').type('secret_sauce');
-    // botão de login
-    cy.get('[data-test="login-button"]').click();
-    // verificar mensagem de erro - campos obrigatórios
-    cy.get('[data-test="error"]').should('have.text', 'Epic sadface: Username is required');
+    // realiza login
+    loginPage.realizarLogin(null, 'secret_sauce');
+    
+    // validação da mensagem de erro - campo obrigatório
+    loginPage.seletores.mensagemErro().should('have.text', 'Epic sadface: Username is required');
   });
 
   it('Login - senha em branco', () => {
-    // usuário
-    cy.get('[data-test="username"]').type('standard_user');
-    // botão de login
-    cy.get('[data-test="login-button"]').click();
-    // verificar mensagem de erro - campos obrigatórios
-    cy.get('[data-test="error"]').should('have.text', 'Epic sadface: Password is required');
+    // realiza login
+    loginPage.realizarLogin('secret_sauce', null);
+    
+    // validação da mensagem de erro - campo obrigatório
+    loginPage.seletores.mensagemErro().should('have.text', 'Epic sadface: Password is required');
   });
   
 });
