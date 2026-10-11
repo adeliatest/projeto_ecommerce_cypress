@@ -1,6 +1,6 @@
 class LoginPage {
     // seletores utilizados nos testes
-    seletores = {
+    seletoresLogin = {
         campoUsuario: () => cy.get('[data-test="username"]'),
         campoSenha: () => cy.get('[data-test="password"]'),
         botaoLogin: () => cy.get('[data-test="login-button"]'),
@@ -19,15 +19,15 @@ class LoginPage {
 
     // login
     preencherUsuario(usuario) {
-        this.seletores.campoUsuario().type(usuario);
+        this.seletoresLogin.campoUsuario().type(usuario);
     }
 
     preencherSenha(senha) {
-        this.seletores.campoSenha().type(senha);
+        this.seletoresLogin.campoSenha().type(senha);
     }
 
     submeter() {
-        this.seletores.botaoLogin().click();
+        this.seletoresLogin.botaoLogin().click();
     }
 
     // campos em branco
@@ -43,8 +43,8 @@ class LoginPage {
 
     // logout
     realizarLogout() {
-        this.seletores.botaoMenuLateral().click();
-        this.seletores.botaoLogout().click();
+        this.seletoresLogin.botaoMenuLateral().click();
+        this.seletoresLogin.botaoLogout().click();
     }
 }
 
