@@ -1,7 +1,5 @@
-// cypress/support/pages/CarrinhoPage.js
-
 class CarrinhoPage {
-    // 1. Mapeamento de Elementos (Seletores)
+    // seletores utilizados nos testes
     seletoresCarrinho = {
         // adição e remoção de itens - carrinho
         botaoAdicionarMochila: () => cy.get('[data-test="add-to-cart-sauce-labs-backpack"]'),
