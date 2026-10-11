@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 import LoginPage from '../support/pages/loginPage';
 import CarrinhoPage from '../support/pages/carrinhoPage';
+import { faker } from '@faker-js/faker';
 
 describe('Carrinho de compras - SauceDemo', () => {
     
@@ -69,13 +70,22 @@ describe('Carrinho de compras - SauceDemo', () => {
         CarrinhoPage.adicionarLuzBicicleta();
         CarrinhoPage.abrirCarrinho();
         CarrinhoPage.iniciarCheckout();
+
+        // geração de dados dinâmicos com faker
+        const nomeDinamico = faker.person.firstName();
+        const sobrenomeDinamico = faker.person.lastName();
+        const cepDinamico = faker.location.zipCode();
         
-        // preenche dados do checkout utilizando a fixture
+        // utiliza dados do faker para preencher dados do checkout
         CarrinhoPage.preencherDadosCheckout(
-            this.dados.checkout.nome,
-            this.dados.checkout.sobrenome,
-            this.dados.checkout.cep
+            nomeDinamico,
+            sobrenomeDinamico,
+            cepDinamico
         );
+        
+        // imprime os dados no terminal do Cypress ajuda a debugar caso o teste falhe
+        cy.log(`Comprador: ${nomeDinamico} ${sobrenomeDinamico} | CEP: ${cepDinamico}`);
+    
         
         // continua para a página de finalizar comprar e finaliza
         CarrinhoPage.continuarCheckout();
