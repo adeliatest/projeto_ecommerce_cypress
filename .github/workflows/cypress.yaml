@@ -1,0 +1,49 @@
+# Identificador do workflow
+name: Cypress Tests
+
+# Quando rodar os testes?
+on:
+  # Quando tiver um 'push' na main
+  push:
+    branches: [ main ]
+  # Quando tiver um 'pull request' na main
+  pull_request:
+    branches: [ main ]
+  # Roda todos os dias, exatamente à 00:00 (3) - fuso horário UTC em que 00:00 (meia-noite) no horário local equivale a 03:00 no horário UTC
+  schedule:
+    - cron: "0 3 * * *"
+
+jobs:
+  # Identificador do job
+  cypress-run:
+    # Define o sistema operacional onde o script será executado.
+    runs-on: ubuntu-latest
+    # Lista de ações/passos que serão executados em ordem.
+    steps:
+      # Faz o download do seu código-fonte para dentro da máquina virtual do GitHub.
+      - name: Checkout
+        uses: actions/checkout@v4
+      # 1. A instalação das dependências (npm ci).
+      # 2. O cache do Cypress (evita baixar o binário toda vez).
+      # 3. A execução do comando 'npx cypress run'.
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+      # Nome visual do passo no painel do GitHub Actions.
+
+      - name: Salvar Relatorio e Evidencias
+        # Usa a action oficial para fazer upload de um artifact (pacote de arquivos gerado durante a execução para download).
+        uses: actions/upload-artifact@v4
+        # Garante a execução deste passo independentemente do resultado dos testes (sucesso ou falha).
+        if: always()
+        # Parâmetros de configuração da action.
+        with:
+          # Define o nome do arquivo .zip que será gerado e disponibilizado.
+          name: relatorio-testes-cypress
+          # O uso do pipe (|) indica uma string multilinha, permitindo listar vários caminhos.
+          path: |
+            cypress/reports
+            cypress/screenshots
+            cypress/videos
+          # Define o tempo de retenção em dias antes da exclusão automática (otimização de armazenamento).
+          retention-days: 7
