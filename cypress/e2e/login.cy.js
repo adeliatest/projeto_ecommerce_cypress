@@ -7,7 +7,7 @@ describe('Tela de login - SauceDemo', () => {
     // acessa página de login
     LoginPage.acessarPagina();
     // carrega a fixture e dá um apelido
-    cy.fixture('example.json').as('dados');
+    cy.fixture('login.json').as('dados');
   });
 
   it('Login - credenciais válidas e logout', function() {
@@ -38,7 +38,7 @@ describe('Tela de login - SauceDemo', () => {
     LoginPage.realizarLogin(this.dados.valido.usuario, this.dados.invalido.senha);
     
     // valida a mensagem de erro
-    LoginPage.elementos.mensagemErro().should('have.text', this.dados.invalido.erroCredenciais);
+    LoginPage.seletoresLogin.mensagemErro().should('have.text', this.dados.invalido.erroCredenciais);
   });
 
   it('Login - usuário em branco', function() {
