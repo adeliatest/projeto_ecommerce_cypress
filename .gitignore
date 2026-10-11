@@ -1,1 +1,5 @@
+# Ignorar o node_modules do Cypress
 node_modules/
+
+# Ignorar as configurações do Continue local do projeto
+.continue/
