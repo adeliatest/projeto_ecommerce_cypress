@@ -1,0 +1,14 @@
+{
+  "textos": {
+    "remover": "Remove",
+    "adicionar": "Add to cart",
+    "quantidadeUm": "1",
+    "nomeProdutoLuz": "Sauce Labs Bike Light",
+    "mensagemSucesso": "Thank you for your order!"
+  },
+  "checkout": {
+    "nome": "Lucas",
+    "sobrenome": "Nunes",
+    "cep": "444"
+  }
+}
