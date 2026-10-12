@@ -86,13 +86,13 @@ npx cypress open
 npx cypress run
 ```
 ## 📝 Casos de Teste Abordados
-### Tela de login (`login.feature`)
+### Tela de login - login.feature
 - **Login com credenciais válidas e logout**: Valida o acesso correto ao sistema e a funcionalidade de deslogar.
 - **Login com usuário incorreto**: Valida a mensagem de erro apropriada.
 - **Login com senha incorreta**: Valida a mensagem de erro apropriada.
 - **Login com usuário em branco**: Valida se o sistema exige o preenchimento do campo de usuário.
 - **Login com senha em branco**: Valida se o sistema exige o preenchimento do campo de senha.
-### Carrinho de Compras (`carrinho.feature`)
+### Carrinho de Compras - carrinho.feature
 - **Adicionar item ao carrinho pela página inicial**: Valida a alteração do botão do produto (para "Remove") e a atualização do contador no ícone do carrinho.
 - **Remover item do carrinho pela página inicial**: Valida o retorno do estado do botão (para "Add to cart") e o desaparecimento do contador no ícone do carrinho.
 - **Remover item direto na tela do carrinho**: Valida a exclusão do produto diretamente pela página do carrinho e o reflexo imediato no contador.
